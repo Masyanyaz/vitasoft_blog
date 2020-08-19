@@ -7,10 +7,12 @@
 				<input type="text" v-model.trim="title" />
 			</label>
 			<label class="item">
-				<span class="required">Краткое описание</span> <textarea v-model.trim="preview" />
+				<span class="required">Краткое описание</span>
+				<textarea v-model.trim="preview" />
 			</label>
 			<label class="item">
-				<span class="required">Полное описание</span> <textarea v-model.trim="content" />
+				<span class="required">Полное описание</span>
+				<textarea v-model.trim="content" />
 			</label>
 			<div v-if="isEdit" class="buttons">
 				<button type="submit" :disabled="isDisabled">Сохранить</button>

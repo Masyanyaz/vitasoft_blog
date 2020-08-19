@@ -49,6 +49,7 @@ footer {
 }
 
 #nav a {
+	font-size: 18px;
 	font-weight: bold;
 	color: #2c3e50;
 }
@@ -57,7 +58,7 @@ footer {
 	color: #548eaa;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 440px) {
 	#nav {
 		flex-direction: column;
 	}
