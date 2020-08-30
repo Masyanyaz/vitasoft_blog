@@ -34,7 +34,7 @@ export default {
 			const { id, name, text, resetForm } = this
 
 			if (name && text) {
-				this.$emit('addComment', {
+				this.$store.dispatch('createComment', {
 					id: Date.now(),
 					articleId: id,
 					name,

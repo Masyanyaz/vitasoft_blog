@@ -1,6 +1,8 @@
 <template>
 	<div class="comment">
-		<button class="reset remove" @click="$emit('removeComment', comment.id)">&times;</button>
+		<button class="reset remove" @click="$store.dispatch('removeComment', comment.id)">
+			&times;
+		</button>
 		<h4>{{ comment.name }}</h4>
 		<p>{{ comment.text }}</p>
 	</div>

@@ -6,45 +6,23 @@
 			</h3>
 		</div>
 
-		<CommentItem
-			v-for="comment in comments"
-			:key="comment.id"
-			:comment="comment"
-			@removeComment="removeComment"
-		/>
+		<CommentItem v-for="comment in comments" :key="comment.id" :comment="comment" />
 
-		<CommentAddForm @addComment="addComment" :id="id" />
+		<CommentAddForm :id="id" />
 	</div>
 </template>
 
 <script>
 import CommentAddForm from './AddForm'
 import CommentItem from './Item'
-import { getComments, addComment, removeComment } from './models'
 
 export default {
 	props: {
 		id: Number,
 	},
-	data: () => ({
-		comments: [],
-	}),
-	created() {
-		this.fetchComments()
-	},
-	methods: {
-		fetchComments() {
-			this.comments = getComments(this.id)
-		},
-		addComment(comment) {
-			this.comments.push(comment)
-
-			addComment(comment)
-		},
-		removeComment(id) {
-			this.comments = this.comments.filter((comment) => comment.id !== id)
-
-			removeComment(id)
+	computed: {
+		comments() {
+			return this.$store.getters.comments(this.id)
 		},
 	},
 	components: {

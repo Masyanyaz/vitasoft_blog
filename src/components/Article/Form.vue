@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import { addArticle, updateArticle } from './models'
-
 export default {
 	props: {
 		id: Number,
@@ -61,20 +59,16 @@ export default {
 
 			if (title && preview && content) {
 				if (isEdit) {
-					const updatedArticle = {
+					this.$store.dispatch('updateArticle', {
 						id: this.article.id,
 						title,
 						preview,
 						content,
-					}
-
-					updateArticle(updatedArticle)
-
-					this.$emit('updateArticle', updatedArticle)
+					})
 
 					closeModal()
 				} else {
-					addArticle({
+					this.$store.dispatch('createArticle', {
 						id: Date.now(),
 						title,
 						preview,

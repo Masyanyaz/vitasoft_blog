@@ -17,7 +17,7 @@ export default {
 	name: 'ArticleItem',
 	methods: {
 		removeArticle() {
-			this.$emit('removeArticle', this.article.id)
+			this.$store.dispatch('removeArticle', this.article.id)
 		},
 	},
 	computed: {

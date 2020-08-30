@@ -1,16 +1,10 @@
 <template>
-	<section class="content">
+	<section class="content" v-if="article">
 		<div class="article">
 			<div class="title">
 				<h1>{{ article.title }}</h1>
 				<img src="../assets/edit.svg" @click="openModal" alt="" width="20" title="Редактировать" />
-				<img
-					src="../assets/delete.svg"
-					@click="removeArticle(article.id)"
-					alt=""
-					width="20"
-					title="Удалить"
-				/>
+				<img src="../assets/delete.svg" @click="removeArticle" alt="" width="20" title="Удалить" />
 			</div>
 			<p>{{ article.content }}</p>
 		</div>
@@ -20,7 +14,7 @@
 		<section v-if="isOpenModal" class="form" @click.self="closeModal">
 			<div class="modal">
 				<button class="reset close" @click="closeModal">&times;</button>
-				<ArticleForm :article="article" @closeModal="closeModal" @updateArticle="updateArticle" />
+				<ArticleForm :article="article" @closeModal="closeModal" />
 			</div>
 		</section>
 	</section>
@@ -29,15 +23,21 @@
 <script>
 import CommentContainer from '../components/Comment/Container'
 import ArticleForm from '../components/Article/Form'
-import { getArticle, removeArticle } from '../components/Article/models'
 
 export default {
 	data: () => ({
-		article: {},
 		isOpenModal: false,
 	}),
+	computed: {
+		article() {
+			const { id } = this.$route.params
+			return this.$store.getters.article(id)
+		},
+	},
 	created() {
-		this.fetchArticle()
+		if (!this.article) {
+			this.$router.push('/404')
+		}
 	},
 	methods: {
 		openModal() {
@@ -46,24 +46,9 @@ export default {
 		closeModal() {
 			this.isOpenModal = false
 		},
-		updateArticle(article) {
-			this.article = article
-		},
-		fetchArticle() {
-			const { id } = this.$route.params
-			const article = getArticle(id)
-
-			if (!article) {
-				this.$router.push('/404')
-			} else {
-				this.article = article
-			}
-		},
-		removeArticle(id) {
-			if (confirm('Вы уверены, что хотите удалить статью?')) {
-				removeArticle(id)
-				this.$router.push('/')
-			}
+		removeArticle() {
+			this.$store.dispatch('removeArticle', this.article.id)
+			this.$router.push('/')
 		},
 	},
 	components: {
